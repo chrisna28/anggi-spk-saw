@@ -5,6 +5,7 @@ class Sub_Kriteria_model extends CI_Model {
 
     public function get_by_kriteria($id_kriteria) {
         $this->db->where('id_kriteria', $id_kriteria);
+        $this->db->order_by('id_sub', 'ASC');
         return $this->db->get('sub_kriteria')->result();
     }
 

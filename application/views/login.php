@@ -115,6 +115,9 @@
                 <div class="login-glass-card">
                     <h3 class="text-center fw-bold mb-4" style="color: #212529;">Login Account</h3>
                     
+                    <?php if($this->session->flashdata('success')): ?>
+                        <div class="alert alert-success py-2 small border-0 mb-4"><?= $this->session->flashdata('success') ?></div>
+                    <?php endif; ?>
                     <?php if($this->session->flashdata('error')): ?>
                         <div class="alert alert-danger py-2 small border-0 mb-4"><?= $this->session->flashdata('error') ?></div>
                     <?php endif; ?>

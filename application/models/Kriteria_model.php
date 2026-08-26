@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Kriteria_model extends CI_Model {
 
     public function get_all() {
+        $this->db->order_by('kode_kriteria', 'ASC');
         return $this->db->get('kriteria')->result();
     }
 

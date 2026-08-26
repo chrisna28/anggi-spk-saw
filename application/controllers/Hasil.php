@@ -59,6 +59,7 @@ class Hasil extends CI_Controller {
                 $total += $r * ($k->bobot / 100);
             }
             $hasil[] = [
+                'id_alternatif' => $a->id_alternatif,
                 'nama' => $a->nama_alternatif,
                 'nilai' => $total
             ];
@@ -70,6 +71,14 @@ class Hasil extends CI_Controller {
         });
 
         $data['hasil'] = $hasil;
+        $data['matrix'] = $matrix;
+
+        // Data untuk cetak laporan
+        $data['kriteria'] = $kriteria;
+        $data['total_alternatif'] = count($alternatif);
+        $data['nama_perusahaan'] = 'CV Ello Albasindo Perkasa';
+        $data['periode'] = date('Y');
+        $data['tanggal_cetak'] = date('d F Y');
 
         $this->load->view('layouts/header', $data);
         $this->load->view('layouts/sidebar');

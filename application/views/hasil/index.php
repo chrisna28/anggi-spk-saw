@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mt-4 pt-3 border-top d-print-none text-muted small">
                 <p><i class="fas fa-info-circle me-1"></i> Ranking diurutkan berdasarkan nilai preferensi tertinggi menggunakan metode Simple Additive Weighting (SAW).</p>
             </div>
@@ -72,10 +72,267 @@
     <?php endif; ?>
 </div>
 
+<!-- ==================== LAPORAN CETAK ==================== -->
+<div class="print-report">
+    <div class="print-header">
+        <div class="print-logo">
+            <img src="<?= base_url('assets/logo.jpeg') ?>" alt="Logo">
+        </div>
+        <h1 class="print-company"><?= $nama_perusahaan ?></h1>
+        <h2 class="print-title">LAPORAN HASIL PERANGKINGAN KARYAWAN TERBAIK</h2>
+        <p class="print-period">Periode Penilaian : Tahun <?= $periode ?></p>
+    </div>
+
+    <div class="print-meta">
+        <table class="print-meta-table">
+            <tr>
+                <td class="print-meta-label">Dicetak Oleh</td>
+                <td class="print-meta-sep">:</td>
+                <td><?= $this->session->userdata('nama') ?: 'Admin HRD' ?></td>
+            </tr>
+            <tr>
+                <td class="print-meta-label">Tanggal Cetak</td>
+                <td class="print-meta-sep">:</td>
+                <td><?= $tanggal_cetak ?></td>
+            </tr>
+            <tr>
+                <td class="print-meta-label">Status</td>
+                <td class="print-meta-sep">:</td>
+                <td>Disetujui Direktur</td>
+            </tr>
+            <tr>
+                <td class="print-meta-label">Jumlah Karyawan</td>
+                <td class="print-meta-sep">:</td>
+                <td><?= $total_alternatif ?> Orang</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="print-table-wrapper">
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th class="print-th-rank">Ranking</th>
+                    <th class="print-th-name">Nama Karyawan</th>
+                    <?php foreach($kriteria as $k): ?>
+                        <th class="print-th-score">
+                            <?= $k->nama_kriteria ?><br>
+                            <span class="print-th-weight">(<?= $k->bobot ?>%)</span>
+                        </th>
+                    <?php endforeach; ?>
+                    <th class="print-th-pref">Nilai Preferensi (V)</th>
+                    <th class="print-th-ket">Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $no=1; foreach($hasil as $h): ?>
+                <tr>
+                    <td class="text-center"><?= $no ?></td>
+                    <td><?= $h['nama'] ?></td>
+                    <?php foreach($kriteria as $k): ?>
+                        <td class="text-center">
+                            <?= $matrix[$h['id_alternatif']][$k->id_kriteria] ?? '-' ?>
+                        </td>
+                    <?php endforeach; ?>
+                    <td class="text-center print-pref"><?= number_format($h['nilai'], 4, ',', '.') ?></td>
+                    <td class="text-center">
+                        <?php if($no <= 3): ?>
+                            Terbaik
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php $no++; endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="print-keterangan">
+        <p class="print-ket-title">Keterangan :</p>
+        <p>- Nilai Preferensi (V) yang lebih besar menunjukkan kinerja yang lebih baik.</p>
+    </div>
+
+    <div class="print-sign">
+        <p>Mengetahui,</p>
+        <p class="print-sign-role">Direktur <?= $nama_perusahaan ?></p>
+        <div class="print-sign-line">
+            <span>L</span>
+        </div>
+    </div>
+</div>
+
 <style>
 @media print {
-    #sidebar, .topbar, .d-print-none { display: none !important; }
+    body { margin: 0; padding: 0; }
+    #sidebar, .topbar, .d-print-none, .ranking-card { display: none !important; }
     #content { margin-left: 0 !important; width: 100% !important; padding: 0 !important; }
-    .card { border: 1px solid #ddd !important; box-shadow: none !important; }
+    .container-fluid { display: none !important; }
+
+    .print-report {
+        display: block !important;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 12px;
+        color: #000;
+        padding: 20px 30px;
+        line-height: 1.5;
+    }
+}
+
+@media screen {
+    .print-report { display: none !important; }
+}
+
+.print-report {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px;
+    color: #000;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 30px;
+    line-height: 1.5;
+}
+
+.print-header {
+    text-align: center;
+    margin-bottom: 15px;
+    border-bottom: 3px double #000;
+    padding-bottom: 15px;
+}
+
+.print-logo {
+    margin-bottom: 10px;
+}
+
+.print-logo img {
+    max-height: 80px;
+    width: auto;
+}
+
+.print-company {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    letter-spacing: 1px;
+}
+
+.print-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    text-transform: uppercase;
+}
+
+.print-period {
+    font-size: 12px;
+    margin: 0;
+}
+
+.print-meta {
+    margin-bottom: 20px;
+}
+
+.print-meta-table {
+    border-collapse: collapse;
+}
+
+.print-meta-table td {
+    padding: 2px 5px;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+.print-meta-label {
+    font-weight: bold;
+    width: 150px;
+}
+
+.print-meta-sep {
+    width: 15px;
+    text-align: center;
+}
+
+.print-table-wrapper {
+    margin-bottom: 15px;
+}
+
+.print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.print-table th,
+.print-table td {
+    border: 1px solid #000;
+    padding: 6px 8px;
+}
+
+.print-table thead tr {
+    background-color: #d9d9d9;
+}
+
+.print-th-rank {
+    text-align: center;
+    width: 55px;
+    font-weight: bold;
+}
+
+.print-th-name {
+    text-align: center;
+    width: 100px;
+    font-weight: bold;
+}
+
+.print-th-score {
+    text-align: center;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.print-th-weight {
+    font-weight: normal;
+    font-size: 10px;
+}
+
+.print-th-pref {
+    text-align: center;
+    width: 100px;
+    font-weight: bold;
+}
+
+.print-th-ket {
+    text-align: center;
+    width: 80px;
+    font-weight: bold;
+}
+
+.print-pref {
+    font-weight: bold;
+}
+
+.print-keterangan {
+    margin: 15px 0;
+    font-size: 11px;
+}
+
+.print-ket-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.print-sign {
+    margin-top: 40px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.print-sign-role {
+    margin-bottom: 60px;
+}
+
+.print-sign-line {
+    text-align: center;
+    width: 150px;
+    border-top: 1px solid #000;
+    padding-top: 5px;
 }
 </style>

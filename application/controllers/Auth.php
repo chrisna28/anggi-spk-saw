@@ -73,13 +73,8 @@ class Auth extends CI_Controller {
             ];
             $this->alternatif_model->insert($alternatif_data);
 
-            $this->session->set_userdata([
-                'id_user' => $id_user,
-                'username' => $username,
-                'nama' => $nama,
-                'level' => 'pelamar'
-            ]);
-            redirect('Pelamar');
+            $this->session->set_flashdata('success', 'Registrasi berhasil, silakan login!');
+            redirect('Auth');
         }
 
         $this->load->view('register');
