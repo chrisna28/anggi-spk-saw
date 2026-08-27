@@ -115,7 +115,6 @@ class Pelamar extends CI_Controller {
                 'jurusan' => $this->input->post('jurusan'),
                 'tahun_masuk' => $this->input->post('tahun_masuk'),
                 'tahun_lulus' => $this->input->post('tahun_lulus') ?: null,
-                'ipk' => $this->input->post('ipk'),
             ];
             $this->pelamar_model->insert_pendidikan($insert);
             $this->session->set_flashdata('success', 'Pendidikan berhasil ditambahkan');
@@ -138,7 +137,6 @@ class Pelamar extends CI_Controller {
             'jurusan' => $this->input->post('jurusan'),
             'tahun_masuk' => $this->input->post('tahun_masuk'),
             'tahun_lulus' => $this->input->post('tahun_lulus') ?: null,
-            'ipk' => $this->input->post('ipk'),
         ];
         $this->pelamar_model->update_pendidikan($id, $update);
         $this->session->set_flashdata('success', 'Pendidikan berhasil diubah');

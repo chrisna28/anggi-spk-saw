@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1:8889', //kalau error ganti dengan localhost
+	'hostname' => 'mysql',
 	'username' => 'root',
 	'password' => 'root',
 	'database' => 'anggi_spk_saw',

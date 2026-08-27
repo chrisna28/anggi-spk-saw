@@ -54,7 +54,7 @@
             <div class="mb-3 pb-3 border-bottom">
                 <span class="badge bg-primary"><?= $p->jenjang ?></span>
                 <div class="fw-bold mt-1"><?= htmlspecialchars($p->jurusan ?: $p->nama_sekolah) ?></div>
-                <div class="small text-muted"><?= htmlspecialchars($p->nama_sekolah) ?> | <?= $p->tahun_masuk ?> - <?= $p->tahun_lulus ?: 'Sekarang' ?><?= $p->ipk ? ' | IPK: '.$p->ipk : '' ?></div>
+                <div class="small text-muted"><?= htmlspecialchars($p->nama_sekolah) ?> | <?= $p->tahun_masuk ?> - <?= $p->tahun_lulus ?: 'Sekarang' ?></div>
             </div>
             <?php endforeach; ?>
             <?php endif; ?>

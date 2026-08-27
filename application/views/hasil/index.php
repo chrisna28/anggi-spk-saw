@@ -78,9 +78,11 @@
         <div class="print-logo">
             <img src="<?= base_url('assets/logo.jpeg') ?>" alt="Logo">
         </div>
-        <h1 class="print-company"><?= $nama_perusahaan ?></h1>
-        <h2 class="print-title">LAPORAN HASIL PERANGKINGAN KARYAWAN TERBAIK</h2>
-        <p class="print-period">Periode Penilaian : Tahun <?= $periode ?></p>
+        <div class="print-header-text">
+            <h1 class="print-company"><?= $nama_perusahaan ?></h1>
+            <h2 class="print-title">LAPORAN HASIL PERANGKINGAN KARYAWAN TERBAIK</h2>
+            <p class="print-period">Periode Penilaian : Tahun <?= $periode ?></p>
+        </div>
     </div>
 
     <div class="print-meta">
@@ -112,16 +114,19 @@
         <table class="print-table">
             <thead>
                 <tr>
-                    <th class="print-th-rank">Ranking</th>
-                    <th class="print-th-name">Nama Karyawan</th>
+                    <th class="print-th-rank" rowspan="2">Ranking</th>
+                    <th class="print-th-name" rowspan="2">Nama Karyawan</th>
+                    <th class="print-th-group" colspan="<?= count($kriteria) ?>">Nilai per Kriteria</th>
+                    <th class="print-th-pref" rowspan="2">Nilai Preferensi (V)</th>
+                    <th class="print-th-ket" rowspan="2">Keterangan</th>
+                </tr>
+                <tr>
                     <?php foreach($kriteria as $k): ?>
                         <th class="print-th-score">
                             <?= $k->nama_kriteria ?><br>
                             <span class="print-th-weight">(<?= $k->bobot ?>%)</span>
                         </th>
                     <?php endforeach; ?>
-                    <th class="print-th-pref">Nilai Preferensi (V)</th>
-                    <th class="print-th-ket">Keterangan</th>
                 </tr>
             </thead>
             <tbody>
@@ -155,13 +160,18 @@
         <p>Mengetahui,</p>
         <p class="print-sign-role">Direktur <?= $nama_perusahaan ?></p>
         <div class="print-sign-line">
-            <span>L</span>
+            <span>Direktur</span>
         </div>
     </div>
 </div>
 
 <style>
 @media print {
+    @page {
+        size: landscape;
+        margin: 15mm;
+    }
+
     body { margin: 0; padding: 0; }
     #sidebar, .topbar, .d-print-none, .ranking-card { display: none !important; }
     #content { margin-left: 0 !important; width: 100% !important; padding: 0 !important; }
@@ -172,7 +182,7 @@
         font-family: 'Times New Roman', Times, serif;
         font-size: 12px;
         color: #000;
-        padding: 20px 30px;
+        padding: 0;
         line-height: 1.5;
     }
 }
@@ -185,26 +195,36 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     color: #000;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 20px 30px;
     line-height: 1.5;
 }
 
 .print-header {
+    position: relative;
     text-align: center;
     margin-bottom: 15px;
     border-bottom: 3px double #000;
     padding-bottom: 15px;
+    min-height: 80px;
 }
 
 .print-logo {
-    margin-bottom: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .print-logo img {
     max-height: 80px;
+    max-width: 80px;
     width: auto;
+    display: block;
+}
+
+.print-header-text {
+    display: inline-block;
 }
 
 .print-company {
@@ -282,6 +302,12 @@
     font-weight: bold;
 }
 
+.print-th-group {
+    text-align: center;
+    font-weight: bold;
+    font-size: 11px;
+}
+
 .print-th-score {
     text-align: center;
     font-weight: bold;
@@ -321,8 +347,10 @@
 
 .print-sign {
     margin-top: 40px;
-    text-align: left;
+    text-align: center;
     font-size: 12px;
+    width: 250px;
+    margin-left: auto;
 }
 
 .print-sign-role {
@@ -330,9 +358,9 @@
 }
 
 .print-sign-line {
-    text-align: center;
     width: 150px;
     border-top: 1px solid #000;
     padding-top: 5px;
+    margin: 0 auto;
 }
 </style>

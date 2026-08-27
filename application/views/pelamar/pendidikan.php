@@ -21,7 +21,7 @@
                             <span class="badge bg-primary mb-2"><?= $p->jenjang ?></span>
                             <h6 class="fw-bold mb-1"><?= htmlspecialchars($p->jurusan ?: $p->nama_sekolah) ?></h6>
                             <?php if ($p->jurusan): ?><p class="mb-0 text-muted small"><?= htmlspecialchars($p->nama_sekolah) ?></p><?php endif; ?>
-                            <p class="mb-0 small"><?= $p->tahun_masuk ?> - <?= $p->tahun_lulus ?: 'Sekarang' ?><?= $p->ipk ? ' | IPK: '.$p->ipk : '' ?></p>
+                            <p class="mb-0 small"><?= $p->tahun_masuk ?> - <?= $p->tahun_lulus ?: 'Sekarang' ?></p>
                         </div>
                         <div>
                             <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $p->id_pendidikan ?>"><i class="fas fa-edit"></i></button>
@@ -52,7 +52,6 @@
                 <div class="mb-3"><label class="form-label small fw-bold">Jurusan</label><input type="text" name="jurusan" class="form-control"></div>
                 <div class="row"><div class="col-md-6 mb-3"><label class="form-label small fw-bold">Tahun Masuk</label><input type="number" name="tahun_masuk" class="form-control" min="1950" max="2099" required></div>
                 <div class="col-md-6 mb-3"><label class="form-label small fw-bold">Tahun Lulus</label><input type="number" name="tahun_lulus" class="form-control" min="1950" max="2099"></div></div>
-                <div class="mb-3"><label class="form-label small fw-bold">IPK</label><input type="text" name="ipk" class="form-control" placeholder="Contoh: 3.75"></div>
             </div>
             <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button><button type="submit" class="btn btn-primary">Simpan</button></div>
         </form>
@@ -80,7 +79,6 @@
                 <div class="mb-3"><label class="form-label small fw-bold">Jurusan</label><input type="text" name="jurusan" class="form-control" value="<?= htmlspecialchars($p->jurusan) ?>"></div>
                 <div class="row"><div class="col-md-6 mb-3"><label class="form-label small fw-bold">Tahun Masuk</label><input type="number" name="tahun_masuk" class="form-control" value="<?= $p->tahun_masuk ?>" required></div>
                 <div class="col-md-6 mb-3"><label class="form-label small fw-bold">Tahun Lulus</label><input type="number" name="tahun_lulus" class="form-control" value="<?= $p->tahun_lulus ?>"></div></div>
-                <div class="mb-3"><label class="form-label small fw-bold">IPK</label><input type="text" name="ipk" class="form-control" value="<?= $p->ipk ?>"></div>
             </div>
             <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button><button type="submit" class="btn btn-primary">Simpan</button></div>
         </form>
